@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A/B Test</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- 首页 -->
+    <div id="home-page" class="page active">
+        <div class="container">
+            <h1 class="title">A/B Test</h1>
+            <div class="upload-section">
+                <div class="upload-area" id="upload-area">
+                    <i class="fas fa-cloud-upload-alt upload-icon"></i>
+                    <p class="upload-text">点击或拖拽文件到此处</p>
+                    <p class="upload-hint">支持 CSV/XLSX 格式，最多500行数据</p>
+                    <input type="file" id="file-input" accept=".csv,.xlsx,.xls" hidden>
+                </div>
+                <div class="file-info" id="file-info" style="display: none;">
+                    <div class="file-details">
+                        <i class="fas fa-file-alt"></i>
+                        <span id="file-name"></span>
+                        <span id="file-size"></span>
+                    </div>
+                    <button class="btn btn-primary" id="start-test">开始测评</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 加载页面 -->
+    <div id="loading-page" class="page">
+        <div class="container">
+            <div class="loading-content">
+                <div class="loading-spinner"></div>
+                <p class="loading-text">正在处理数据...</p>
+                <div class="loading-progress">
+                    <div class="progress-bar" id="progress-bar"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 测评页面 -->
+    <div id="test-page" class="page">
+        <div class="test-header">
+            <button class="btn btn-back" id="back-btn">
+                <i class="fas fa-arrow-left"></i> 返回
+            </button>
+            <div class="test-title">A/B Test</div>
+        </div>
+        
+        <div class="test-content">
+            <div class="question-container">
+                <div class="standard-question" id="standard-question" style="display: none;"></div>
+                <div class="options-container" id="options-container"></div>
+            </div>
+        </div>
+
+        <div class="test-footer">
+            <div class="navigation">
+                <button class="btn btn-nav" id="prev-btn" disabled>
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button class="btn btn-nav" id="next-btn">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+            <div class="progress-info">
+                <span id="progress-text">1 / 1</span>
+                <div class="progress-dots" id="progress-dots"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 提交页面 -->
+    <div id="submit-page" class="page">
+        <div class="container">
+            <div class="submit-content">
+                <div class="submit-animation" id="submit-animation">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <h2>测评完成！</h2>
+                <p>请输入您的昵称或选择匿名</p>
+                <div class="nickname-input">
+                    <input type="text" id="nickname-input" placeholder="请输入昵称">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="anonymous-check">
+                        <span>匿名提交</span>
+                    </label>
+                </div>
+                <button class="btn btn-primary" id="submit-final">提交结果</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 结果页面 -->
+    <div id="result-page" class="page">
+        <div class="container">
+            <div class="result-content">
+                <h2>测评结果</h2>
+                <p>您的序列号：<span id="session-id"></span></p>
+                <div class="download-options">
+                    <button class="btn btn-download" id="download-csv">
+                        <i class="fas fa-download"></i> 下载 CSV
+                    </button>
+                    <button class="btn btn-download" id="download-xlsx">
+                        <i class="fas fa-download"></i> 下载 XLSX
+                    </button>
+                </div>
+                <button class="btn btn-primary" id="new-test">开始新测评</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 确认对话框 -->
+    <div id="confirm-modal" class="modal">
+        <div class="modal-content">
+            <h3>确认返回</h3>
+            <p>返回将清空当前测评数据，确定要继续吗？</p>
+            <div class="modal-actions">
+                <button class="btn btn-secondary" id="cancel-back">取消</button>
+                <button class="btn btn-primary" id="confirm-back">确定</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 备注对话框 -->
+    <div id="note-modal" class="modal">
+        <div class="modal-content">
+            <h3>添加备注</h3>
+            <textarea id="note-text" placeholder="请输入备注内容..."></textarea>
+            <div class="modal-actions">
+                <button class="btn btn-secondary" id="cancel-note">取消</button>
+                <button class="btn btn-primary" id="save-note">保存</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
